@@ -1,20 +1,15 @@
 import React from 'react';
 import './Task.css';
 
-const Task = ({ description, created }) => {
+
+const Task = ({ taskItem }) => {
     return (
-      <li>
-          <div className="view">
-            <input className="toggle" type="checkbox"/>
-            <label>
-               <span className="description">{description}</span>
-               <span className="created">{created}</span>
-            </label>
-            <button className="icon icon-edit"></button>
-            <button className="icon icon-destroy"></button>
-          </div>
-      </li>
+        <>
+            <span className="description">{taskItem.description}</span>
+            <span className="created">{taskItem.created}</span>
+        </>
     );
-};
+}
+
 
 export default Task;

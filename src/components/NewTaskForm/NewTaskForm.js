@@ -1,41 +1,33 @@
-import React, { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+import React from "react";
 import './NewTaskForm.css';
 
-
-const NewTaskForm = ({ onAddTask }) => {
-  const [newTask, setNewTask] = useState('');
-
-  const handleInputChange = (event) => {
-    setNewTask(event.target.value);
-  }; 
-
-const handleAddTask = () => {
-    if (newTask.trim() !== '') {
-      const taskDate = new Date(); 
-      const formattedTime = getTimeAgo(taskDate);
-  
-      onAddTask({ description: newTask, status: '', created: formattedTime });
-      setNewTask('');
-    }
+export default class NewTaskForm extends React.Component {
+  state = {
+      value: ''
   };
-  
 
-const getTimeAgo = (taskDate) => {
-    return formatDistanceToNow(taskDate, { addSuffix: true });
+  onChange = (e) => {
+      this.setState({
+          value: e.target.value
+      })
   };
-  
 
-  return (
-    <input
-      className="new-todo"
-      placeholder="What needs to be done?"
-      autoFocus
-      value={newTask}
-      onChange={handleInputChange}
-      onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
-    />
-  );
+  onSubmit = (e) => {
+      e.preventDefault();
+      this.props.onAddTask(this.state.value);
+      this.setState({
+          value: ''
+      })
+  };
+
+  render() {
+      return (
+          <form onSubmit={this.onSubmit}>
+            <input className="new-todo" 
+            value={this.state.value}
+            placeholder="What needs to be done?"
+            onChange={this.onChange}
+            autoFocus />
+          </form>);
+  }
 };
-
-export default NewTaskForm;
